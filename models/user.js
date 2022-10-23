@@ -1,7 +1,7 @@
 // Define Mongoose
 const { Schema, model } = require('mongoose');
 
-// define schema format
+// schema to create User model
 const userSchema = new Schema(
     {
         username: {

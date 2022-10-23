@@ -1,5 +1,6 @@
 const { Schema, Types } = require('mongoose');
 
+// schema to create though model
 const thoughtSchema = new Schema(
     {
         thoughText: {
@@ -15,7 +16,7 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
         },
-        // how to add reaction schema??
+        // add reaction schema
         reactions: {
             type: Schema.Types.ObjectId,
             default: () => new Types.ObjectId(),
