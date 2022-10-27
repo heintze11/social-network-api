@@ -17,12 +17,33 @@ const thoughtSchema = new Schema(
             required: true,
         },
         // add reaction schema
-        reactions: {
-            type: Schema.Types.ObjectId,
-            default: () => new Types.ObjectId(),
+        reactions: [reactionSchema]
+    }
+);
+
+// create reaction schema
+const reactionSchema = new Schema(
+    {
+        reactionText: {
+            type: String,
+            required: true,
+            maxLength: 280,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+        userName: {
+            type: String,
+            required: true,
         },
     }
-)
+);
 
+thoughtSchema.virtual('reactionCount').get(function(){
+    return this.reactions.length;
+})
 
-module.exports = thoughtSchema;
+const Thought = model('Thought', thoughtSchema);
+
+module.exports = Thought;
