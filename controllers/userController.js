@@ -24,12 +24,13 @@ module.exports = {
   },
 
   // Delete user based on ID - Also delete associated Thoughts
+  // Delete thoughts by matching Usernames - use deleteMany
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with that ID' })
-          : Thought.deleteMany({ _id: { $in: user.thoughts } })
+          : Thought.deleteMany({ userName: { $in: user.userName } })
       )
       .then(() => res.json({ message: 'User and Thoughts deleted!' }))
       .catch((err) => res.status(500).json(err));
