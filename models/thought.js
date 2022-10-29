@@ -22,7 +22,7 @@ const reactionSchema = new Schema(
 // schema to create though model
 const thoughtSchema = new Schema(
     {
-        thoughText: {
+        thoughtText: {
             type: String,
             required: true,
             maxLength: 280,

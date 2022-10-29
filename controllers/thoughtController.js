@@ -27,7 +27,7 @@ module.exports = {
     // edit thought by ID
     editThought(req, res) {
         Thought.findOneAndUpdate(
-            { _id: req.params.userId },
+            { _id: req.params.thoughtId },
             { $set: req.body },
             { runValidators: true, new: true }
         )
@@ -54,7 +54,7 @@ module.exports = {
     addThoughtResponse(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $addToSet: { response: req.params.response } },
+            { $addToSet: { reactions: req.body } },
             { runValidators: true, new: true },
         ).then((thought) =>
             !thought
