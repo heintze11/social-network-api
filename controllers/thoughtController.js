@@ -10,8 +10,21 @@ module.exports = {
     // create new thought
     createThought(req, res) {
         Thought.create(req.body)
-            .then((dbThoughtData) => res.json(dbThoughtData))
+            .then(async (thought) => {
+                console.log(thought.userName);
+                await User.findOneAndUpdate(
+                    { userName: thought.userName },
+                    { $addToSet: { thoughts: thought._id } },
+                    { new: true },
+                );
+            })
+            .then((user) => {
+                !user
+                    ? res.status(404).json({ message: 'Thought created but no user with this id!' })
+                    : res.json(user)
+            })
             .catch((err) => res.status(500).json(err));
+
     },
     // get thought by ID
     getSingleThought(req, res) {
@@ -31,10 +44,10 @@ module.exports = {
             { $set: req.body },
             { runValidators: true, new: true }
         )
-            .then((user) =>
-                !user
+            .then((thought) =>
+                !thought
                     ? res.status(404).json({ message: 'No thought with this id!' })
-                    : res.json(user)
+                    : res.json(thought)
             )
             .catch((err) => res.status(500).json(err));
     },
@@ -44,9 +57,8 @@ module.exports = {
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with that ID' })
-                    : res.json()
+                    : res.json({ message: 'Thought and Responses deleted!' })
             )
-            .then(() => res.json({ message: 'Thought and Responses deleted!' }))
             .catch((err) => res.status(500).json(err));
     },
 
@@ -68,7 +80,7 @@ module.exports = {
     removeThoughtResponse(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { reactions: {_id: req.params.reactionId } } },
+            { $pull: { reactions: { _id: req.params.reactionId } } },
             { runValidators: true, new: true },
         ).then((reaction) =>
             !reaction
