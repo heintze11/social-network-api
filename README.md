@@ -1,5 +1,12 @@
 # NoSQL Social Network API's
 
+## Table of Contents:
+- [Description](#description)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Links](#links)
+
 ## Description
 This app creates the backend API routes necessary for a social network site. Using insomnia to test the routes, user's can create a new profile, add thoughts, and react to others's thoughts. User's can also add other users as friends.
 
@@ -17,10 +24,12 @@ Requirements
 5. There is no seed file included so all entries in the DB will need to be added through Insomnia
 
 ## Examples
+Using Insomnia all API routes can be tested to populate the database.
+![Get All Users](Assets/get-users.PNG)
 
-
+![Get All Thoughts](Assets/get-thoughts.PNG)
 
 ## Links
 -[Github](https://github.com/heintze11/social-network-api)
 
--[Video Walkthrough](https://watch.screencastify.com/v/SA1dIjed34htziujPhVq)
+-[Video Walkthrough](https://drive.google.com/file/d/1Y5Ypo2rvNXJWDT7V6ycYUspo81ZjxhgT/view)
