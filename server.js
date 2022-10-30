@@ -19,7 +19,3 @@ db.once('open', () => {
     });
   });
 
-  // Create models for data structure
-  // create routes to retrieve data
-  // connect everything
-  

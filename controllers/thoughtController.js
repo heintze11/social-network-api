@@ -10,9 +10,8 @@ module.exports = {
     // create new thought
     createThought(req, res) {
         Thought.create(req.body)
-            .then(async (thought) => {
-                console.log(thought.userName);
-                await User.findOneAndUpdate(
+            .then( (thought) => {
+                return User.findOneAndUpdate(
                     { userName: thought.userName },
                     { $addToSet: { thoughts: thought._id } },
                     { new: true },
@@ -54,6 +53,13 @@ module.exports = {
     // Delete thought by ID
     deleteThought(req, res) {
         Thought.findOneAndDelete({ _id: req.params.thoughtId })
+            .then( (thought) => {
+                return User.findOneAndUpdate(
+                    { userName: thought.userName },
+                    { $pull: { thoughts: thought._id } },
+                    { new: true },
+                );
+            })
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with that ID' })
